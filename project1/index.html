@@ -15,10 +15,23 @@
         </div>
     </div>
     
-    <p>The goal of this assignment is to take the digitized Prokudin-Gorskii glass plate images and, using image processing techniques, automatically produce a color image with as few visual artifacts as possible. There were two types of images - .jpg (smaller and simpler) and .tif (required image pyramid )
-    I wrote code for both </p>
+    <p>The goal of this assignment is to take the digitized Prokudin-Gorskii glass plate images and, using image processing techniques, automatically produce a color image with as few visual artifacts as possible. There were two types of images - .jpg (smaller and simpler) and .tif (required image pyramid) </p>
     <h2>Single-Scale Alignment</h2>
     <p>The Green (G) and Red (R) channels are aligned to the Blue (B) channel by searching for the best displacement within a specified window (e.g., [-15, 15] pixels in both x and y directions). The search is exhaustive, meaning that every possible pixel shift in this window is tested.</p>
+
+    <h2>Pyramid-Based Alignment</h2>
+    <p>For larger images, exhaustive search can be computationally expensive. To mitigate this, a coarse-to-fine approach using an image pyramid is applied. The image is scaled down (rescaled by a factor of 2) to multiple levels, forming an image pyramid. Alignment starts at the coarsest level (smallest image), where the search space is much smaller. Once a good alignment is found at this level, the result is used as a starting point for finer levels, scaling up and refining the alignment progressively.
+     The displacement offsets found at each pyramid level are doubled for the next finer level to account for the scaling.   
+    </p>
+
+    <h2>Issues Faced</h2>
+    <ul>
+        <li>Had to make some changes to my system to accomidate the various libraries used</li>
+        <li>Spent additional time on the pyramid, using Euclidean Distance</li>
+    </ul>
+
+
+    
 
   
 </html>
