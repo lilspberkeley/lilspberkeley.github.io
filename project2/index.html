@@ -1,1 +1,35 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>CS 180 Project 2</title>
+</head>
+
+<body>
+    <!-- Title -->
+    <div class="navbar clear nav-top">
+        <div class="row" style="text-align: center;">
+            <h1>CS 180 Project 2: Fun with Filters and Frequencies</h1>
+            <b>By Shreyas Prasanna</b>
+        </div>
+    </div>
+<p>This project investigates various techniques for using frequencies to process and combine images in unique ways. Images can be sharpened by filtering and amplifying its higher frequencies. Finite difference kernels can be applied to extract edges. Hybrid images are created by merging the high-frequency components of one image with the low-frequency elements of another. Additionally, images can be blended at different frequency levels using Gaussian and Laplacian pyramids.</p>
+<h2>Part 1: Fun with Filters</h2>
+<p>In this part, I built intuitions about 2D convolutions and filtering.</p>
+<h2>About the gradient magnitude computation</h2>
+<p>Gradient magnitude computation is a technique used in image processing to measure the strength of changes (gradients) in pixel intensity, typically indicating edges or transitions within an image. It involves calculating the gradient of the image in both horizontal and vertical directions (usually using Sobel or finite difference operators) and then combining these to determine the overall magnitude at each pixel. The gradient magnitude is typically computed as the square root of the sum of the squares of the horizontal and vertical gradients, highlighting regions with significant intensity changes.</p>
+<h2>Part 1.1: Finite Difference Operator</h2>
+<p>Here are the results of convolving the cameraman image with the finite difference operators Dx and Dy:</p>
+  <ol>
+      <li><strong>Original Image:</strong> The original cameraman image.</li>
+      <li><strong>Partial Derivative in X:</strong> The image after applying the Dx filter, which highlights horizontal edges.</li>
+      <li><strong>Partial Derivative in Y:</strong> The image after applying the Dy filter, which highlights vertical edges.</li>
+      <li><strong>Edge Image (Thresholded Gradient Magnitude):</strong> The binarized gradient magnitude image, showing the edges. The current threshold value is 0.2.</li>
+  </ol>
+<p>The edge image can be further refined by adjusting the threshold value to better balance noise suppression and edge detection.</p>
+<h2>Results</h2>
+    <div class="gallery">
+        <img src="results/cathedral.png" />
+       
+    </div>
