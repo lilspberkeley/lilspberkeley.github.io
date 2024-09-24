@@ -19,7 +19,7 @@
 <p>In this part, I built intuitions about 2D convolutions and filtering.</p>
 <h2>About the gradient magnitude computation</h2>
 <p>Gradient magnitude computation is a technique used in image processing to measure the strength of changes (gradients) in pixel intensity, typically indicating edges or transitions within an image. It involves calculating the gradient of the image in both horizontal and vertical directions (usually using Sobel or finite difference operators) and then combining these to determine the overall magnitude at each pixel. The gradient magnitude is typically computed as the square root of the sum of the squares of the horizontal and vertical gradients, highlighting regions with significant intensity changes.</p>
-<h2>Part 1.1: Finite Difference Operator</h2>
+<h2>Finite Difference Operator</h2>
 <p>Here are the results of convolving the cameraman image with the finite difference operators Dx and Dy:</p>
   <ol>
       <li><strong>Original Image:</strong> The original cameraman image.</li>
@@ -32,9 +32,33 @@
     <div class="gallery">
         <img src="results/output (1).png" />
     </div>
-
+<h2>Noticeable Differences</h2>
 <p>In this task, applying a Gaussian filter before the difference operation serves to smooth the image and reduce noise. When using just the difference operator (e.g., the finite difference), the high-frequency components (such as sharp edges and noise) are amplified, which can result in a noisy output. By first applying a Gaussian filter, we blur the image slightly, which smooths out the noise while preserving important edges.</p>
 <p>The key difference is that the Gaussian-smoothed gradient produces cleaner and less noisy results compared to the direct application of the difference operator. Edges appear more defined, while the unwanted noise and high-frequency details are reduced. This results in an overall more visually appealing gradient, with edges more clearly distinguishable. The Gaussian filter effectively suppresses small, abrupt intensity changes due to noise, which helps in producing a clearer representation of the image's true structure.</p>
+
+
+<h2>Image Sharpening</h2>
+<p>The written code aims to sharpen an image using an unsharp masking technique. The process involves several key steps:</p>
+    <ol>
+        <li>
+            <strong>Loading and Grayscale Conversion:</strong> The image is first loaded, and to simplify the sharpening process, it's converted to grayscale. This reduces the complexity from three channels (RGB) to one (intensity), making the image easier to work with for gradient operations.
+        </li>
+        <li>
+            <strong>Gaussian Blurring:</strong> A Gaussian blur is applied to the grayscale image. This acts as a low-pass filter, which smooths the image by reducing high-frequency details such as noise and fine texture. The Gaussian filter is created using a 2D convolution, implemented with the <code>cv2.getGaussianKernel()</code> function, generating a 1D Gaussian kernel. The outer product of this kernel with its transpose creates a 2D Gaussian filter.
+        </li>
+        <li>
+            <strong>High-Frequency Component Extraction:</strong> The blurred version of the image is subtracted from the original grayscale image to isolate the high-frequency components. This captures the details and edges in the image that represent sharp transitions in pixel values.
+        </li>
+        <li>
+            <strong>Sharpening:</strong> The high-frequency components are added back to the original image (with a scaling factor to control the strength of sharpening). This enhances the details, making the image appear crisper by emphasizing the edges.
+        </li>
+        <li>
+            <strong>Display:</strong> Finally, the original grayscale image, the blurred (low-pass) image, and the sharpened image are displayed side by side for comparison. This allows for a visual observation of the effect of unsharp masking, where the image is sharpened without amplifying noise excessively, thanks to the Gaussian blur.
+        </li>
+    </ol>
+<p>This approach ensures that the sharpening process enhances important details while controlling noise, resulting in a visually cleaner output.</p>
+
+
 
 </body>
 </html>
