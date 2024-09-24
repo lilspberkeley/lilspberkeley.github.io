@@ -30,6 +30,11 @@
 <p>The edge image can be further refined by adjusting the threshold value to better balance noise suppression and edge detection.</p>
 <h2>Results</h2>
     <div class="gallery">
-        <img src="results/cathedral.png" />
-       
+        <img src="results/output (1).png" />
     </div>
+
+<p>In this task, applying a Gaussian filter before the difference operation serves to smooth the image and reduce noise. When using just the difference operator (e.g., the finite difference), the high-frequency components (such as sharp edges and noise) are amplified, which can result in a noisy output. By first applying a Gaussian filter, we blur the image slightly, which smooths out the noise while preserving important edges.</p>
+<p>The key difference is that the Gaussian-smoothed gradient produces cleaner and less noisy results compared to the direct application of the difference operator. Edges appear more defined, while the unwanted noise and high-frequency details are reduced. This results in an overall more visually appealing gradient, with edges more clearly distinguishable. The Gaussian filter effectively suppresses small, abrupt intensity changes due to noise, which helps in producing a clearer representation of the image's true structure.</p>
+
+</body>
+</html>
