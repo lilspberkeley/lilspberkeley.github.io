@@ -75,8 +75,62 @@
 <h3>Final GIF</h3>
 <img src="results/morph_sequence.gif" alt="Animated GIF"/>
 
+<h2>Part 4. The "Mean face" of a population</h2>
+<p>To create an average face representation using a dataset of annotated faces, follow the steps below:</p>
+    <ul>
+        <li>
+            <strong>Select a Dataset:</strong>
+            Choose a freely available dataset that includes annotated keypoints for facial landmarks. Examples include the Danes dataset or other similar databases.
+            If necessary, ensure permission is granted to use the dataset.
+        </li>
+        <li>
+            <strong>Compute the Average Face Shape:</strong>
+            Calculate the average shape of the entire population or a specific subset (e.g., based on age, ethnicity, or gender such as young/old, men/women, Asian/white, etc.).
+            Ensure that the chosen subpopulation contains a sufficient number of faces for the analysis to be meaningful.
+        </li>
+        <li>
+            <strong>Morph Faces to the Average Shape:</strong>
+            Warp each individual face in the dataset to align with the computed average shape using the provided keypoints.
+            Display some examples of these morphed faces to illustrate how the faces have been transformed into the average geometry.
+        </li>
+        <li>
+            <strong>Compute and Display the Average Face:</strong>
+            Combine the morphed faces by averaging their pixel values to create a composite image representing the mean face of the population.
+            Display the computed mean face and visualize the result.
+        </li>
+        <li>
+            <strong>Visual Comparisons:</strong>
+            Show two additional visualizations:
+            <ul>
+                <li>Your own face warped to align with the computed average face geometry.</li>
+                <li>The computed average face warped to align with the geometry of your face.</li>
+            </ul>
+            These visualizations help demonstrate the alignment and morphing transformations applied.
+        </li>
+    </ul>
+    <p>This methodology allows for a comprehensive visualization and understanding of facial averages within a population, enabling analysis of how individual faces conform to or deviate from the mean face structure.</p>
 
-    
+
+<h3>Below are the images used</h3>
+    <div class="gallery">
+        <img src="results/avg1.jpg" />
+        <img src="results/avg2.jpg" />
+        <img src="results/avg3.jpg" />
+        <img src="results/avg4.jpg" />
+</div>
+
+<h3>And below are the resulting "Mean" faces for a white male</h3>
+    <div class="gallery">
+        <img src="results/avg1_avg4.jpg" />
+        <img src="results/avg2_avg3.jpg" />
+        <img src="results/avg3_avg1.jpg" />
+</div>
+
+<h3>After morphing George Clooney with the average face, we get the following</h3>
+    <div class="gallery">
+        <img src="results/george_average.jpg" />
+    </div>
+
 </body>
   
   
