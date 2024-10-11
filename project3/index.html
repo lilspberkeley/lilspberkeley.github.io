@@ -37,7 +37,22 @@
 <div class="gallery">
         <img src="results/brad_george_traingle.png" />
 </div>
-    
+
+<h2>Part 2. Computing the "Mid-way Face"</h2>
+<p>Before generating the complete morph sequence, the "mid-way face" of images A and B must be calculated. This process involves three main steps:</p>
+    <ul>
+        <li><strong>Compute the Average Shape:</strong> Calculate the average position for each keypoint from both images to derive the "midway" shape.</li>
+        <li><strong>Warp Both Faces:</strong> Transform each face so that it aligns with this average shape using the corresponding keypoints.</li>
+        <li><strong>Average the Colors:</strong> Blend the colors of the warped faces to create the final mid-way image.</li>
+    </ul>
+    <p>The critical task in this process is to warp each face into the average shape by applying an affine transformation for each triangle in the triangulation. This requires computing an affine transformation matrix <code>A</code> between the corresponding triangles in the original images and the average shape:</p>
+    <p><code>A = computeAffine(tri1_pts, tri2_pts)</code></p>
+    <p>An affine transformation matrix for each triangle must then be used to perform an inverse warp on all pixels in the image. To achieve this, masks can be created using functions like <code>polygon</code> in Python or <code>roipoly</code> in MATLAB, defining the region of each triangle. Although interpolation functions may assist in this task, no built-in functions for computing transformations are allowed.</p>
+
+<h3>Results of morphing George Clooney and Brad Pitt</h3>
+<div class="gallery">
+        <img src="results/brad_george_traingle.png" />
+</div>
 </body>
   
   
