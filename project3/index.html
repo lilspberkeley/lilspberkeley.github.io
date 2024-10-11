@@ -1,0 +1,28 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CS 180 Project 3</title>
+</head>
+<body>
+    <!-- Title -->
+    <div class="navbar clear nav-top">
+        <div class="row" style="text-align: center;">
+            <h1>CS 180 Project 3: Face Morphing</h1>
+            <b>By Shreyas Prasanna</b>
+        </div>
+    </div>
+  <p>In this project we will produce a "morph" animation of your face into someone else's face, compute the mean of a population of faces and extrapolate from a population mean to create a caricature of yourself.
+  A morph is a simultaneous warp of the image shape and a cross-dissolve of the image colors. The cross-dissolve is the easy part; controlling and doing the warp is the hard part. The warp is controlled by defining a correspondence between the two pictures. The correspondence should map eyes to eyes, mouth to mouth, chin to chin, ears to ears, etc., to get the smoothest transformations possible.
+</p>
+
+  <h2>Part 1. Defining Correspondences</h2>
+  <p>The first step involves manually identifying pairs of corresponding keypoints on two images. The more keypoints defined, the smoother and more accurate the morphing result. This can be accomplished using tools such as cpselect in MATLAB, or by creating a custom tool using ginput (in MATLAB or Python) combined with plotting commands. It is important to label the two faces consistently, ensuring that points are indexed in the same order for both images (labeled as Face A and Face B). Saving the keypoints once a satisfactory set has been established is advisable to avoid repeating this manual process.
+</p>
+  <p>Next, these keypoints are used to generate a triangulation structure necessary for the morphing process. The triangulation can be computed using different methods, with Delaunay triangulation being an effective choice due to its ability to minimize the formation of overly narrow triangles. It is important that the triangulation remains consistent throughout the morphing process, so it should be based on a single set of points, preferably calculated at the "midway" shape. This "midway shape" is determined by averaging the two sets of keypoints, thereby reducing the potential for triangle distortion during morphing.
+</p>
+
+  
+  
+</html>
