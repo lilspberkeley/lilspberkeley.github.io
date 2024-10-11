@@ -51,8 +51,32 @@
 
 <h3>Results of morphing George Clooney and Brad Pitt</h3>
 <div class="gallery">
-        <img src="results/brad_george_traingle.png" />
+        <img src="results/george_brad_mid.png" />
 </div>
+
+<h2>Part 3. The Morph Sequence</h2>
+<p>The goal is to create a function:</p>
+    <p><code>morphed_im = morph(im1, im2, im1_pts, im2_pts, tri, warp_frac, dissolve_frac);</code></p>
+    <p>This function produces a morph between two images, <code>im1</code> and <code>im2</code>, using the point correspondences defined in <code>im1_pts</code> and <code>im2_pts</code>. These points are represented as n-by-2 matrices of (x, y) coordinates. Additionally, the function uses the triangulation structure, <code>tri</code>, to facilitate the transformation.</p>
+    <p>The function parameters <code>warp_frac</code> and <code>dissolve_frac</code> control the transformation process:</p>
+    <ul>
+        <li><strong><code>warp_frac</code>:</strong> This parameter manages the shape warping between the two images.</li>
+        <li><strong><code>dissolve_frac</code>:</strong> This parameter determines the cross-dissolution of the images’ colors.</li>
+    </ul>
+    <p>Both parameters range from 0 to 1 and are the only variables that change for each frame in the morphing sequence. Specifically:</p>
+    <ul>
+        <li>For the starting frame, both <code>warp_frac</code> and <code>dissolve_frac</code> are set to 0, meaning the image remains identical to <code>im1</code>.</li>
+        <li>For the ending frame, both parameters are set to 1, resulting in an image identical to <code>im2</code>.</li>
+    </ul>
+    <p>The function warps <code>im1</code> and <code>im2</code> into an intermediate shape configuration based on <code>warp_frac</code>. It then performs a cross-dissolve according to <code>dissolve_frac</code>, blending the colors accordingly. For interpolation purposes, these parameters will be incrementally adjusted to achieve a smooth transition between frames.</p>
+    <p>The output of this function should be a video sequence that smoothly morphs from image A to image B. The final output can be provided as an animated GIF or a link to a video (e.g., on YouTube). It is important to ensure that the video file is not hosted directly on your website.</p>
+
+
+<h3>Final GIF</h3>
+<img src="results/morph_sequence.gif" alt="Animated GIF"/>
+
+
+    
 </body>
   
   
