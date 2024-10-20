@@ -1,1 +1,111 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>CS 180 Project 4a</title>
+</head>
+
+<body>
+  <!-- Title -->
+  <div class="navbar clear nav-top">
+      <div class="row" style="text-align: center;">
+          <h1>CS 180 Project 4a: Colorizing the Prokudin-Gorskii photo collection</h1>
+          <b>By Shreyas Prasanna</b>
+      </div>
+  </div>
+  <p>The goal of this assignment is to get our hands dirty in different aspects of image warping with a “cool” application -- image mosaicing. We will take two or more photographs and create an image mosaic by registering, projective warping, resampling, and compositing them. Along the way, we will learn how to compute homographies, and how to use them to warp images.</p>
+
+  <h2>Shoot the Pictures</h2>
+  <p>I took a couple of picture sets (2 or 3 imagees) for a few indoor and outdoor scenes that follow the below "rules":</p>
+  <ul>
+        <li><strong>Projective Transformation:</strong> The images should appear to be taken from a single viewpoint, but with a slight rotation or shift between them. This is the essence of projective transformation, where the perspective changes slightly but objects in the scene remain recognizable.</li>
+        
+        <li><strong>Sufficient Overlap:</strong> Each photo should overlap with the adjacent ones by 40% to 70%. This is crucial for stitching the images together later, as you’ll need common points or features in both images to compute the homography.</li>
+        
+        <li><strong>Minimal Distortion:</strong> If the images don’t have significant lens distortion (like fisheye or extreme barrel distortion), then they should be fine for your project. If there is distortion, it can complicate the image warping and blending process.</li>
+        
+        <li><strong>Consistent Lighting and Scene Stability:</strong> If the photos were taken at the same time or under similar lighting, and there’s no significant movement in the scene (e.g., trees swaying too much, water flowing rapidly), then they will work well for image mosaicing.</li>
+    </ul>
+
+  <h2>Recover Homographies</h2>
+  <h3>Matrix A Construction</h3>
+    <p>
+        For each correspondence (x<sub>1</sub>, y<sub>1</sub>) &#8596; (x<sub>2</sub>, y<sub>2</sub>), 
+        two rows are added to the matrix <em>A</em>, forming the system:
+    </p>
+    <pre>
+    [
+        -x<sub>1</sub>, -y<sub>1</sub>, -1,  0,  0,  0,  x<sub>1</sub>x<sub>2</sub>, y<sub>1</sub>x<sub>2</sub>, x<sub>2</sub>
+         0,  0,  0, -x<sub>1</sub>, -y<sub>1</sub>, -1,  x<sub>1</sub>y<sub>2</sub>, y<sub>1</sub>y<sub>2</sub>, y<sub>2</sub>
+    ]
+    </pre>
+
+    <h3>Solving the System</h3>
+    <p>
+        We use <strong>Singular Value Decomposition (SVD)</strong> to solve the homogeneous system <em>Ah = 0</em>. 
+        The solution vector <em>h</em> (which gives us the homography matrix <em>H</em>) is found from the last row of <em>V<sup>T</sup></em>.
+    </p>
+
+    <h3>Normalizing the Homography Matrix</h3>
+    <p>
+        After computing the homography matrix <em>H</em>, it is normalized by dividing by the bottom-right value <em>H[2,2]</em> 
+        to ensure that the scaling factor is 1.
+    </p>
+
+  <h2>Warp the Images</h2>
+  <h2>Corner Transformation</h2>
+    <p>
+        The corners of the input image are transformed using the homography matrix <em>H</em> to predict the bounding box of the warped image.
+    </p>
+
+    <h2>Meshgrid for Output Coordinates</h2>
+    <p>
+        We create a grid of output coordinates that span the predicted bounding box. These are the coordinates where we want to compute pixel values for the warped image.
+    </p>
+
+    <h2>Inverse Warp</h2>
+    <p>
+        We apply the inverse homography <em>H<sup>-1</sup></em> to map each pixel in the output image back to a coordinate in the input image.
+    </p>
+
+    <h2>Interpolation</h2>
+    <p>
+        We use <code>scipy.interpolate.griddata</code> to interpolate pixel values at the computed coordinates. This avoids aliasing by smoothly sampling the input image.
+    </p>
+
+    <h2>Alpha Mask</h2>
+    <p>
+        Pixels that are outside the valid bounds of the input image are marked using an alpha mask or set to zero.
+    </p>
+
+  <h2>Image Rectification</h2>
+  <p>For the process of image rectification, I took a couple of images of rectangular objects, such as a laptop and TV. After which I took the following steps:</p>
+  <h2>Steps for Image Rectification</h2>
+
+    <h3>Define Point Correspondences</h3>
+    <ul>
+        <li>You need to identify four points in your input image (e.g., the corners of a rectangular object like a painting or monitor).</li>
+        <li>These points will be stored in <code>im1_pts</code>, representing their coordinates in the image.</li>
+        <li>For <code>im2_pts</code>, you define the desired position of these points, typically corresponding to the four corners of a perfect rectangle (e.g., [0, 0], [1, 0], [1, 1], [0, 1]).</li>
+    </ul>
+
+    <h3>Compute Homography</h3>
+    <ul>
+        <li>Using the <code>computeH</code> function that you already developed, compute the homography matrix that maps the points in <code>im1_pts</code> to <code>im2_pts</code>.</li>
+    </ul>
+
+    <h3>Warp the Image</h3>
+    <ul>
+        <li>Use the <code>warpImage</code> function to apply the computed homography and warp the input image so that the rectangular object is rectified.</li>
+    </ul>
+
+    <h3>Visualize the Result</h3>
+    <ul>
+        <li>Display the original and rectified images to verify that the transformation worked as expected.</li>
+    </ul>
+
+
+</body>
+  
+</html>
