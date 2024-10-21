@@ -54,34 +54,34 @@
     </p>
 
   <h2>Warp the Images</h2>
-  <h2>Corner Transformation</h2>
+  <h3>Corner Transformation</h3>
     <p>
         The corners of the input image are transformed using the homography matrix <em>H</em> to predict the bounding box of the warped image.
     </p>
 
-    <h2>Meshgrid for Output Coordinates</h2>
+    <h3>Meshgrid for Output Coordinates</h3>
     <p>
         We create a grid of output coordinates that span the predicted bounding box. These are the coordinates where we want to compute pixel values for the warped image.
     </p>
 
-    <h2>Inverse Warp</h2>
+    <h3>Inverse Warp</h3>
     <p>
         We apply the inverse homography <em>H<sup>-1</sup></em> to map each pixel in the output image back to a coordinate in the input image.
     </p>
 
-    <h2>Interpolation</h2>
+    <h3>Interpolation</h3>
     <p>
         We use <code>scipy.interpolate.griddata</code> to interpolate pixel values at the computed coordinates. This avoids aliasing by smoothly sampling the input image.
     </p>
 
-    <h2>Alpha Mask</h2>
+    <h3>Alpha Mask</h3>
     <p>
         Pixels that are outside the valid bounds of the input image are marked using an alpha mask or set to zero.
     </p>
 
   <h2>Image Rectification</h2>
   <p>For the process of image rectification, I took a couple of images of rectangular objects, such as a laptop and TV. After which I took the following steps:</p>
-  <h2>Steps for Image Rectification</h2>
+  <h3>Steps for Image Rectification</h3>
 
     <h3>Define Point Correspondences</h3>
     <ul>
@@ -105,7 +105,7 @@
         <li>Display the original and rectified images to verify that the transformation worked as expected.</li>
     </ul>
   <h3>Below are the results of image rectification</h3>
-  <h2 id="single-scale-alignment-results">Result-1</h2>
+  <h3 id="single-scale-alignment-results">Result-1</h3>
                 <div class="gallery">
                     <img src="results/laptop.jpg" />
                     <img src="results/rectified_laptop.jpg" />
@@ -137,20 +137,20 @@
 
 
 <p>Below are the results</p>
-  <h2 id="single-scale-alignment-results">Hall Results</h2>
+  <h3 id="single-scale-alignment-results">Hall Results</h3>
                 <div class="gallery">
                     <img src="results/hall1.jpg" />
                     <img src="results/hall2.jpg" />
                    <img src="results/hall_combined.jpg" />
                 </div>
-  <h2 id="single-scale-alignment-results">TV Results</h2>
+  <h3 id="single-scale-alignment-results">TV Results</h3>
                 <div class="gallery">
                     <img src="results/tv1.jpg" />
                     <img src="results/tv2.jpg" />
                    <img src="results/tv_combined.jpg" />
                 </div>
 
-  <h2 id="single-scale-alignment-results">Kitchen Results</h2>
+  <h3 id="single-scale-alignment-results">Kitchen Results</h3>
                 <div class="gallery">
                     <img src="results/kitchen1.jpg" />
                     <img src="results/kitchen2.jpg" />
