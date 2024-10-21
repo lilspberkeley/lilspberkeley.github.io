@@ -104,7 +104,39 @@
     <ul>
         <li>Display the original and rectified images to verify that the transformation worked as expected.</li>
     </ul>
+  <h3>Below are the results of image rectification</h3>
+  <h2 id="single-scale-alignment-results">Result-1</h2>
+                <div class="gallery">
+                    <img src="results/laptop.jpg" />
+                    <img src="results/rectified_laptop.jpg" />
+                </div>
 
+  <h2>Blend the images into a mosaic</h2>
+  <p>The approach to create a seamless mosaic between two images involves the following steps:</p>
+
+<ol>
+  <li><strong>Identify Corresponding Points</strong>: Manually select common points in both images, such as corners or edges of objects, which will be used to align the images.</li>
+  
+  <li><strong>Calculate Homography Matrix</strong>: Using the corresponding points, a homography matrix is computed to map points from the left image to the right (root) image, transforming the perspective.</li>
+
+  <li><strong>Warp the Left Image</strong>: The left image is warped based on the homography matrix so that it aligns with the root image, making their perspectives match.</li>
+
+  <li><strong>Blend the Images</strong>: A blending technique (alpha blending) is applied in the overlapping regions of the two images to ensure a smooth transition without visible seams.</li>
+
+  <li><strong>Construct the Mosaic</strong>: The non-overlapping regions from the left image are combined with the rest of the root image, and the result is a seamless mosaic that includes both images.</li>
+</ol>
+
+<h3>Key Concepts</h3>
+<ul>
+  <li><strong>Homography</strong>: Transforms the perspective of one image to match another.</li>
+  <li><strong>Warping</strong>: Adjusts the left image to align with the root image.</li>
+  <li><strong>Blending</strong>: Ensures smooth transitions between overlapping parts of the images.</li>
+</ul>
+
+<p>This method results in a combined mosaic that naturally transitions from one image to the other, with aligned perspectives and blended overlapping areas.</p>
+
+
+<p>Below are the results</p>
 
 </body>
   
