@@ -184,6 +184,8 @@
       ANMS works by selecting a subset of corners based on a suppression radius that adapts according to corner strength. For each corner, I computed the distance to other stronger corners within the neighborhood and retained only those that had a high suppression radius. This ensured a uniform spatial distribution of points, improving the robustness of feature matching in areas of overlap between images. I visualized the final set of selected corners overlaid on the original image to confirm a balanced distribution.
   </p>
 
+  <h3>The harris corners and ANMS results are shown as below.</h3>
+
   <h3>Step 3: Feature Descriptor Extraction</h3>
   <p>
       With a refined set of interest points, I proceeded to extract feature descriptors from each selected corner, following Section 4 of the paper. Instead of implementing rotation-invariant descriptors, I simplified the approach by extracting axis-aligned, fixed-size patches, specifically 8x8 patches centered on each corner point. To capture enough context for each descriptor, I extracted each patch from a larger 40x40 window around each interest point.
