@@ -184,7 +184,10 @@
       ANMS works by selecting a subset of corners based on a suppression radius that adapts according to corner strength. For each corner, I computed the distance to other stronger corners within the neighborhood and retained only those that had a high suppression radius. This ensured a uniform spatial distribution of points, improving the robustness of feature matching in areas of overlap between images. I visualized the final set of selected corners overlaid on the original image to confirm a balanced distribution.
   </p>
 
-  <h3>The harris corners and ANMS results are shown as below.</h3>
+  <h3 id="single-scale-alignment-results">The harris corners and ANMS results are shown as below:</h3>
+                <div class="gallery">
+                    <img src="results/corners.png" />
+                </div>
 
   <h3>Step 3: Feature Descriptor Extraction</h3>
   <p>
@@ -202,7 +205,57 @@
       This matching process allowed me to identify pairs of points between images that had similar local structures. By visualizing the matches, I could confirm that they were accurate and meaningful, setting up a solid foundation for further steps, such as estimating a robust homography for image stitching.
   </p>
 
+  <h3 id="single-scale-alignment-results">The Descriptor Extraction and Matching are as below:</h3>
+                <div class="gallery">
+                    <img src="results/extracted.png" />
+                    <img src="results/matching.png" />
+                </div>
 
+  <h2>Steps to Compute a Robust Homography using 4-point RANSAC</h2>
+    
+    <ol>
+        <li><strong>Randomly Sample 4 Corresponding Points</strong>: 
+            Select four pairs of matching points between the two images.
+        </li>
+        <li><strong>Compute the Homography</strong>: 
+            Use these four pairs to estimate a homography matrix that maps points from one image to the other.
+        </li>
+        <li><strong>Calculate Inliers</strong>: 
+            Apply the homography to all matching points, then count the number of inliers (points that map closely within a defined threshold).
+        </li>
+        <li><strong>Iterate and Refine</strong>: 
+            Repeat this process for a specified number of iterations, keeping track of the homography that yields the maximum number of inliers.
+        </li>
+        <li><strong>Return the Best Homography</strong>: 
+            The homography with the most inliers is the final, robust estimate.
+        </li>
+    </ol>
+
+  <p>Below are the results</p>
+  <h3 id="single-scale-alignment-results">Hall Results</h3>
+                <div class="gallery">
+                    <img src="results/hall1.jpg" />
+                    <img src="results/hall2.jpg" />
+                   <img src="results/hall_combined.jpg" />
+                </div>
+  <h3 id="single-scale-alignment-results">TV Results</h3>
+                <div class="gallery">
+                    <img src="results/tv1.jpg" />
+                    <img src="results/tv2.jpg" />
+                   <img src="results/tv_combined.jpg" />
+                </div>
+
+  <h3 id="single-scale-alignment-results">Kitchen Results</h3>
+                <div class="gallery">
+                    <img src="results/kitchen1.jpg" />
+                    <img src="results/kitchen2.jpg" />
+                   <img src="results/kitchen_combined.jpg" />
+                </div>
+
+  
+
+
+  
   <h2>Takeaways</h2>
   <p>The coolest thing I learned through this project was the power and versatility of feature-based image matching techniques. Diving into the paper gave me a deeper appreciation for the nuances of computer vision, especially in how robust matching pipelines can be created by carefully balancing detection, descriptor extraction, and spatial distribution of features. The implementation of Adaptive Non-Maximal Suppression (ANMS) was particularly enlightening; I realized how essential it is to ensure a uniform spatial distribution of features to improve matching accuracy and avoid clusters that might introduce ambiguity.
   </p>
