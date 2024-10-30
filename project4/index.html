@@ -163,6 +163,51 @@
                 </div>
 
 
+  <h1>CS 180 Project 4b: FEATURE MATCHING for AUTOSTITCHING</h1>
+
+  <p>The goal of this project is to create a system for automatically stitching images into a mosaic. A secondary goal is to learn how to read and implement a research paper.</p>
+
+
+  <h3>Step 1: Harris Interest Point Detection</h3>
+  <p>
+      To start, I implemented the Harris corner detector to identify interest points in a single-scale image, following Section 2 of the paper. Rather than developing a multi-scale approach or focusing on sub-pixel accuracy, I simplified the process by using a standard implementation of the Harris detector, provided in <code>harris.py</code>. This function calculates the Harris corner response across the image, highlighting areas with strong corner-like structures.
+  </p>
+  <p>
+      Once the Harris corners were detected, I overlaid the corner points on the original image to visually represent where interest points were identified. This visualization helped verify that the corner detection was capturing key structural details in the image, which would later be essential for robust feature matching.
+  </p>
+
+  <h3>Step 2: Adaptive Non-Maximal Suppression (ANMS)</h3>
+  <p>
+      After detecting Harris corners, I implemented Adaptive Non-Maximal Suppression (ANMS) as described in Section 3 of the paper. ANMS refines the set of detected corners by prioritizing points that are not only strong in response but also well-distributed across the image. This step addresses a common issue in feature detection, where too many interest points cluster in certain regions, potentially leading to less effective matching.
+  </p>
+  <p>
+      ANMS works by selecting a subset of corners based on a suppression radius that adapts according to corner strength. For each corner, I computed the distance to other stronger corners within the neighborhood and retained only those that had a high suppression radius. This ensured a uniform spatial distribution of points, improving the robustness of feature matching in areas of overlap between images. I visualized the final set of selected corners overlaid on the original image to confirm a balanced distribution.
+  </p>
+
+  <h3>Step 3: Feature Descriptor Extraction</h3>
+  <p>
+      With a refined set of interest points, I proceeded to extract feature descriptors from each selected corner, following Section 4 of the paper. Instead of implementing rotation-invariant descriptors, I simplified the approach by extracting axis-aligned, fixed-size patches, specifically 8x8 patches centered on each corner point. To capture enough context for each descriptor, I extracted each patch from a larger 40x40 window around each interest point.
+  </p>
+  <p>
+      After sampling, each patch was bias/gain-normalized by subtracting the mean and dividing by the standard deviation. This normalization ensured that the descriptors were invariant to lighting variations, making the features more reliable across images. Each normalized patch was then flattened into a feature vector, which would later be used in the matching step.
+  </p>
+
+  <h3>Step 4: Feature Matching</h3>
+  <p>
+      The final step involved matching these feature descriptors between pairs of images. Following Section 5 of the paper and Lowe’s approach, I computed the sum of squared differences (SSD) between each pair of feature descriptors from the two images. For each feature in one image, I identified the nearest and second-nearest neighbors in the other image based on SSD distance. To filter out ambiguous matches, I applied Lowe’s ratio test, which compares the SSD ratio of the closest match to the second-closest match. Only matches with a ratio below a certain threshold were retained, ensuring that each matched pair was unique and distinctive.
+  </p>
+  <p>
+      This matching process allowed me to identify pairs of points between images that had similar local structures. By visualizing the matches, I could confirm that they were accurate and meaningful, setting up a solid foundation for further steps, such as estimating a robust homography for image stitching.
+  </p>
+
+
+  <h2>Takeaways</h2>
+  <p>The coolest thing I learned through this project was the power and versatility of feature-based image matching techniques. Diving into the paper gave me a deeper appreciation for the nuances of computer vision, especially in how robust matching pipelines can be created by carefully balancing detection, descriptor extraction, and spatial distribution of features. The implementation of Adaptive Non-Maximal Suppression (ANMS) was particularly enlightening; I realized how essential it is to ensure a uniform spatial distribution of features to improve matching accuracy and avoid clusters that might introduce ambiguity.
+  </p>
+
+  <p>Overall, it was a great learnings experience and a fun project.</p>
+  
+
 </body>
   
 </html>
