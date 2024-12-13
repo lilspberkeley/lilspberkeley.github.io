@@ -69,6 +69,26 @@ The result was a much more visually appealing synthesized texture, with reduced 
     </div>  
 
 
-  
+<h2>Part 4: Texture Transfer</h2>
+
+<p>
+For the final task, I implemented the texture_transfer function, which adapts the quilt_cut method to perform texture transfer by incorporating guidance from a pair of sample and target correspondence images. This function allows for synthesizing textures that not only maintain the properties of the source texture but also align with the structural features of the target image, as described in section 3 of the paper.</p>
+
+<p>
+  The main enhancement in this function is the introduction of an additional cost term. While quilt_cut focused on minimizing edge artifacts in overlapping regions, texture_transfer adds a penalty based on the difference between the sampled source patch and the corresponding region in the target image at the same location. This ensures that the resulting texture aligns with the shape and structure of the target, enabling a more meaningful transfer of texture.
+</p>
+
+<p>
+  The function calculates the overall cost for each potential patch as a weighted combination of the boundary cost (used in quilt_cut) and the appearance cost from the target correspondence. By adjusting the relative importance of these terms, the texture synthesis can balance between preserving the source texture's characteristics and adhering to the target's structure.
+
+The patches are then sampled and blended using seam finding, as in quilt_cut, ensuring smooth transitions between adjacent patches. The resulting output preserves the visual coherence of the source texture while effectively transferring it onto the target image. This method demonstrates the versatility of texture synthesis techniques and highlights how adding context-aware cost terms can guide the process to produce tailored, visually compelling results.
+</p>  
+
+<h3 id="single-scale-alignment-results">Texture Transfer Results</h3>
+  <div class="gallery">
+    <img src="results/texture.jpg" />
+  </div>  
+
+
 </body>
 </html>
