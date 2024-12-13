@@ -1,0 +1,74 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CS 180 Final Project 1: Image Quilting</title>
+</head>
+
+<body>
+  <!-- Title -->
+  <div class="navbar clear nav-top">
+      <div class="row" style="text-align: center;">
+          <h1>CS 180 Project 5a: The Power of Diffusion Models!</h1>
+          <b>By Shreyas Prasanna</b>
+      </div>
+  </div>
+
+<p>
+The objective of this assignment is to implement the image quilting algorithm for texture synthesis and transfer, 
+as outlined in the seminal SIGGRAPH 2001 paper by Efros and Freeman. 
+Texture synthesis involves generating a larger texture image from a small sample by sampling patches and arranging them in overlapping patterns, ensuring the overlapping regions are similar. 
+When perfect matches are not possible, edges may appear in the texture, which are mitigated by computing a seam through pixels with similar intensities in the overlap. Texture transfer extends this concept to give an object the appearance of the texture sample while preserving its original shape, by ensuring sampled patches match both the target image and the overlapping regions. 
+This project integrates essential techniques like template matching, seam finding, and masking, which are fundamental in applications such as image stitching, completion, retargeting, and blending, demonstrating their broad relevance in computational photography and computer graphics.
+</p>
+
+<h2>Part 1: Randomly Sampled Texture</h2>
+<p>
+  In this step of the project, I implemented the `quilt_random` function, which generates a synthesized texture by randomly sampling square patches from a given sample image and arranging them to fill an output image of a specified size. The function takes in the sample image, the desired output size, and the patch size as inputs. Starting from the upper-left corner, it tiles the sampled patches sequentially, leaving black borders at the edges if the patches do not fit evenly into the output dimensions. This approach, while straightforward, is the simplest and least effective method for texture synthesis, as it does not ensure continuity or seamless blending between adjacent patches. Nonetheless, I saved the result from this method to use as a baseline for comparison with more advanced techniques in subsequent steps.
+</p>
+
+<h3 id="single-scale-alignment-results">Quilt Random Results</h3>
+    <div class="gallery">
+      <img src="results/quilt_random.heic" />
+    </div>
+
+<h2>Part 2: Overlapping Patches </h2>
+<p>
+  In this phase of the project, I implemented the quilt_simple function, an enhancement over the random quilting method, designed to produce a more seamless synthesized texture. This function constructs the output image by sampling square patches from a given texture sample while accounting for overlapping regions between patches. Starting with a random patch for the upper-left corner, subsequent patches are placed with horizontal and/or vertical overlaps, depending on their position in the output grid.
+</p>
+<p>
+  To evaluate potential patches for placement, I created two helper functions: ssd_patch and choose_sample. The ssd_patch function computes the cost of a patch based on the sum of squared differences (SSD) between the overlapping regions of the output and sample patches. Using a masked template approach, the SSD is efficiently calculated with filtering operations to determine the best matches. The choose_sample function selects a patch from the sample image by considering the costs and randomly picking one from among the lowest costs, as controlled by a tolerance parameter (tol). This allows for balancing deterministic and stochastic texture generation.
+</p>
+<p>
+  Once a patch is selected, its pixels are copied into the corresponding position in the output image. Care was taken to debug alignment, ensuring that overlapping regions in the output matched their computed SSD costs. I validated the implementation by generating small textures with a low tolerance (tol=1) to verify partial copying of the input texture and saved results with higher tolerance to demonstrate stochastic texture synthesis. This method significantly improves on the random approach, yielding textures with smoother transitions between patches.
+</p>
+
+<h3 id="single-scale-alignment-results">Quilt Simple Results</h3>
+    <div class="gallery">
+      <img src="results/quilt_simple.jpg" />
+    </div>
+
+<h2>Part 3: Seam Finding</h2>
+
+<p>
+  In this step, I implemented the quilt_cut function to further refine the texture synthesis process by incorporating seam finding, addressing edge artifacts that arise from overlapping patches. This method builds on the previous quilt_simple function by minimizing visible seams in the overlapping regions of adjacent patches.
+</p>
+<p>
+  The key enhancement involves using the provided cut function, which computes the minimum-cost contiguous path through a region based on the boundary cost (bndcost). The cost is calculated as the squared differences (summed over RGB channels for color images) between the output image and the newly sampled patch in the overlapping areas. For patches with overlaps on both the top and left, two seams are computed—one for the vertical overlap and one for the horizontal overlap. The final mask for blending is derived from the intersection of these two seam masks using logical operations.
+</p>
+<p>
+  To integrate the seam finding into the quilting process, I modified the overlapping regions of each patch to follow the optimal paths determined by the cut function. Vertical seams were handled by transposing the boundary cost before applying the cut, ensuring flexibility for both horizontal and vertical directions.
+
+The result was a much more visually appealing synthesized texture, with reduced edge artifacts and smoother transitions between patches. By comparing the output of quilt_cut to the earlier methods, it was evident that seam finding significantly enhanced the quality of the texture, providing a more seamless and realistic result.
+</p>
+
+<h3 id="single-scale-alignment-results">Quilt Cut Results</h3>
+    <div class="gallery">
+      <img src="results/quilt_cut.jpg" />
+    </div>  
+
+
+  
+</body>
+</html>
